@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { styled } from "styled-components"
 import {RxAvatar} from "react-icons/rx"
 import { MdDonutLarge } from "react-icons/md";
@@ -6,12 +6,15 @@ import {BsFillChatLeftTextFill} from "react-icons/bs"
 import {FiMoreVertical} from "react-icons/fi"
 import {AiOutlineSearch} from "react-icons/ai"
 import SideBarChat from "./SideBarChat";
+import { StateContext } from "../StateProvider";
 
 
-const SideBar = () => {
+const SideBar = ({messages}) => {
+    const [state, reducer] = useContext(StateContext)
+    const {user} = state
     return (<Wrapper>
         <div className="header">
-            <RxAvatar className="avatar"/>
+            <img src={user?.photoURL} alt=""  className="userImg"/>
             <div className="rheader">
                 <button className="btn">
                     <MdDonutLarge className="icon"/>
@@ -31,9 +34,7 @@ const SideBar = () => {
             </div>
         </div>
         <div className="chats">
-            <SideBarChat/>
-            <SideBarChat/>
-            <SideBarChat/>
+            <SideBarChat messages={messages}/>
         </div>
     </Wrapper>)
 }
@@ -60,6 +61,11 @@ const Wrapper = styled.div`
     color:gray;
    }
 
+   .userImg {
+        height: 3rem;
+        width: 3rem;
+        border-radius: 1.5rem;
+   }
    .btn{
     border: none;
     background: transparent;

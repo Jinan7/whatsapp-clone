@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { styled } from "styled-components"
 
-const SideBarChat = () => {
+const SideBarChat = ({messages}) => {
     const [seed, setSeed] = useState('')
 
     useEffect(()=>{
@@ -10,8 +10,8 @@ const SideBarChat = () => {
     return (<Wrapper>
         <img src={`https://avatars.dicebear.com/api/human/b${seed}.svg`} alt="avatar" className="avatar"/>
         <div className="info">
-            <h2>room name</h2>
-            <p>last msg</p>
+            <h2>ChatRoom</h2>
+            <p>{messages[messages.length -1]?.message}</p>
         </div>
     </Wrapper>)
 }

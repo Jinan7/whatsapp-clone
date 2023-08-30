@@ -1,15 +1,52 @@
 
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import SideBar from './components/Sidebar';
 import Chat from './components/Chat';
+import Pusher from 'pusher-js'
+import axios from 'axios';
+import fetchUtil from '../util';
+import Login from './components/Login';
+import StateProvider, { StateContext } from './StateProvider';
+
 
 const App = () => {
+  const [user, setUser] = useState(null)
+  const [messages, setMessages] = useState([])
+  const [state, reducer] = useContext(StateContext)
+
+  const fetchData = async ()=>{
+    const response = await fetchUtil.get('/messages/sync')
+    setMessages(response.data)
+  }
+  useEffect(()=>{
+    fetchData()
+  },[])
+  useEffect(()=>{
+
+    const pusher = new Pusher("9d98ad2d5ba915745f7c", {
+      cluster: 'eu'
+    })
+
+      const channel = pusher.subscribe('messages')
+      channel.bind('inserted', (data)=>{
+      console.log(data)
+      setMessages([...messages, data])
+  })
+  return () => {
+    channel.unbind_all()
+    channel.unsubscribe()
+  }
+
+
+  },  [messages])
+
+  
   return (<Wrapper>
-    <div className="app-center">
-      <SideBar/>
-      <Chat/>
-    </div>
+    {state.user?<div className="app-center">
+      <SideBar messages={messages}/>
+      <Chat messages={messages}/>
+    </div>:<Login/>}
   </Wrapper>)
 }
 
