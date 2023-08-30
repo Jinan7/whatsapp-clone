@@ -11,6 +11,7 @@ const app = express()
 const port = process.env.PORT || 5000
 const url = process.env.MONGO_URI
 
+app.use(express.static(path.resolve(__dirname, './dist')))
 app.use(express.json())
 app.use(Cors())
 app.use('/api/v1/messages', msgrouter)
