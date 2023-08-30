@@ -10,7 +10,8 @@ const createMessage = async (req, res) => {
 const getAll = async (req, res) => {
     console.log("getting all")
     const result = await Messages.find({})
-    return res.status(StatusCodes.OK).send()
+    console.log(result)
+    return res.status(StatusCodes.OK).json(result)
 }
 
 module.exports = {createMessage, getAll}

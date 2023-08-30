@@ -20,10 +20,8 @@ const connect = async (url) => {
 const db = mongoose.connection
 db.once("open",()=>{
     const msgCollection = db.collection("messages")
-    console.log(msgCollection)
     const changeStream = msgCollection.watch()
     changeStream.on('change', change =>{
-        console.log(change)
         if(change.operationType === "insert"){
             const msgDetails = change.fullDocument
             pusher.trigger("messages", "inserted", {
