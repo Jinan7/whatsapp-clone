@@ -4,6 +4,7 @@ const dotenv = require('dotenv')
 const connect = require('./db/connect')
 const { msgrouter } = require('./routers/messageRouter')
 const Cors = require('cors')
+const path = require('path')
 dotenv.config()
 
 const app = express()
@@ -18,6 +19,9 @@ app.use(async (err, req, res, next)=>{
     res.send(err.message)
 })
 
+app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, './dist', 'index.html'))
+})
 
 
 const start = async (url) =>{
