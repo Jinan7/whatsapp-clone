@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const MessageSchema = mongoose.Schema({
     message:String,
     name:String,
-    timeStamp:String,
+    timestamp:String,
     received:Boolean
 })
 
