@@ -13,7 +13,6 @@ const url = process.env.MONGO_URI
 
 app.use(express.static(path.resolve(__dirname, './dist')))
 app.use(express.json())
-app.use(Cors())
 app.use('/api/v1/messages', msgrouter)
 app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, './dist', 'index.html'))
