@@ -1,14 +1,42 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { AiOutlineSearch } from "react-icons/ai"
 import { IoIosAttach } from "react-icons/io"
 import {FiMoreVertical} from "react-icons/fi"
 import { styled } from "styled-components"
 import {MdInsertEmoticon} from "react-icons/md"
 import {BsFillMicFill} from "react-icons/bs"
+import fetchUtil from "../../util"
+import { StateContext } from "../StateProvider"
 
 
-const Chat = () => {
+const Chat = (props) => {
+    const {messages} = props
     const [seed, setSeed] = useState("")
+    const [chat, setChat] = useState('')
+    const [state, reducer] = useContext(StateContext)
+    const {user} = state
+
+    const UpdateChat = (e) => {
+        e.preventDefault()
+        setChat((chat)=>{
+            return e.target.value
+        })
+    }
+
+    const sendMessage = async (e)=>{
+        e.preventDefault()
+        await fetchUtil.post('/messages/new', {
+            message:chat,
+            name: user.displayName,
+            timestamp: new Date().toUTCString(),
+            received:true,
+        })
+
+        console.log(user.displayName)
+        setChat((chat)=>{
+            return ""
+        })
+    }
     useEffect(()=>{
         setSeed(Math.floor(Math.random() * 5000))
     }, [])
@@ -16,8 +44,8 @@ const Chat = () => {
         <div className="header">
             <img src={`https://avatars.dicebear.com/api/human/b${seed}.svg`} alt="" className="avatar"/>
             <div className="info">
-                <h2>room name</h2>
-                <p>last seen at...</p>
+                <h2>ChatRoom</h2>
+                <p>{messages[messages.length -1]?.timestamp}</p>
             </div>
             <div className="rheader">
                 <button className="btn">
@@ -32,110 +60,26 @@ const Chat = () => {
             </div>
         </div>
         <div className="body">
-            <p className="message">
-                <span className="name">Lorem.</span>
-                Lorem ipsum dolor sit amet.
-                <span className="timestamp">
-                    {new Date().toUTCString()}
-                </span>
-            </p>
-            <p className="message receiver">
-                <span className="name">Lorem.</span>
-                Lorem ipsum dolor sit amet.
-                <span className="timestamp">
-                    {new Date().toUTCString()}
-                </span>
-            </p>
-            <p className="message ">
-                <span className="name">Lorem.</span>
-                Lorem ipsum dolor sit amet.
-                <span className="timestamp">
-                    {new Date().toUTCString()}
-                </span>
-            </p>
-            <p className="message">
-                <span className="name">Lorem.</span>
-                Lorem ipsum dolor sit amet.
-                <span className="timestamp">
-                    {new Date().toUTCString()}
-                </span>
-            </p>
-            <p className="message receiver">
-                <span className="name">Lorem.</span>
-                Lorem ipsum dolor sit amet.
-                <span className="timestamp">
-                    {new Date().toUTCString()}
-                </span>
-            </p>
-            <p className="message ">
-                <span className="name">Lorem.</span>
-                Lorem ipsum dolor sit amet.
-                <span className="timestamp">
-                    {new Date().toUTCString()}
-                </span>
-            </p>
-            <p className="message">
-                <span className="name">Lorem.</span>
-                Lorem ipsum dolor sit amet.
-                <span className="timestamp">
-                    {new Date().toUTCString()}
-                </span>
-            </p>
-            <p className="message receiver">
-                <span className="name">Lorem.</span>
-                Lorem ipsum dolor sit amet.
-                <span className="timestamp">
-                    {new Date().toUTCString()}
-                </span>
-            </p>
-            <p className="message ">
-                <span className="name">Lorem.</span>
-                Lorem ipsum dolor sit amet.
-                <span className="timestamp">
-                    {new Date().toUTCString()}
-                </span>
-            </p>
-            <p className="message receiver">
-                <span className="name">Lorem.</span>
-                Lorem ipsum dolor sit amet.
-                <span className="timestamp">
-                    {new Date().toUTCString()}
-                </span>
-            </p>
-            <p className="message ">
-                <span className="name">Lorem.</span>
-                Lorem ipsum dolor sit amet.
-                <span className="timestamp">
-                    {new Date().toUTCString()}
-                </span>
-            </p>
-            <p className="message">
-                <span className="name">Lorem.</span>
-                Lorem ipsum dolor sit amet.
-                <span className="timestamp">
-                    {new Date().toUTCString()}
-                </span>
-            </p>
-            <p className="message receiver">
-                <span className="name">Lorem.</span>
-                Lorem ipsum dolor sit amet.
-                <span className="timestamp">
-                    {new Date().toUTCString()}
-                </span>
-            </p>
-            <p className="message ">
-                <span className="name">Lorem.</span>
-                Lorem ipsum dolor sit amet.
-                <span className="timestamp">
-                    {new Date().toUTCString()}
-                </span>
-            </p>
+            
+            {
+                messages.map((_message)=>{
+                    const {_id:id, message, name, timestamp, received} = _message
+                    return (<p key={id} className={name===user.displayName?`message receiver`:`message`}>
+                    <span className="name">{name}</span>
+                    {message }
+                    <span className="timestamp">
+                        {/* {new Date().toUTCString()} */}
+                        {timestamp}
+                    </span>
+                </p>)
+                })
+            }
         </div>
         <div className="footer">
             <MdInsertEmoticon className="icon"/>
-            <form action="">
-                <input type="text" placeholder="Type a message" />
-                <button type="submit">send a message</button>
+            <form method="post">
+                <input type="text" placeholder="Type a message" value={chat} onChange={UpdateChat}/>
+                <button type="submit" onClick={sendMessage}>send a message</button>
             </form>
             <BsFillMicFill className="icon"/>
         </div>
