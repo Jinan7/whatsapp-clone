@@ -3,6 +3,8 @@ import { AiOutlineSearch } from "react-icons/ai"
 import { IoIosAttach } from "react-icons/io"
 import {FiMoreVertical} from "react-icons/fi"
 import { styled } from "styled-components"
+import {MdInsertEmoticon} from "react-icons/md"
+import {BsFillMicFill} from "react-icons/bs"
 
 
 const Chat = () => {
@@ -51,9 +53,91 @@ const Chat = () => {
                     {new Date().toUTCString()}
                 </span>
             </p>
+            <p className="message">
+                <span className="name">Lorem.</span>
+                Lorem ipsum dolor sit amet.
+                <span className="timestamp">
+                    {new Date().toUTCString()}
+                </span>
+            </p>
+            <p className="message receiver">
+                <span className="name">Lorem.</span>
+                Lorem ipsum dolor sit amet.
+                <span className="timestamp">
+                    {new Date().toUTCString()}
+                </span>
+            </p>
+            <p className="message ">
+                <span className="name">Lorem.</span>
+                Lorem ipsum dolor sit amet.
+                <span className="timestamp">
+                    {new Date().toUTCString()}
+                </span>
+            </p>
+            <p className="message">
+                <span className="name">Lorem.</span>
+                Lorem ipsum dolor sit amet.
+                <span className="timestamp">
+                    {new Date().toUTCString()}
+                </span>
+            </p>
+            <p className="message receiver">
+                <span className="name">Lorem.</span>
+                Lorem ipsum dolor sit amet.
+                <span className="timestamp">
+                    {new Date().toUTCString()}
+                </span>
+            </p>
+            <p className="message ">
+                <span className="name">Lorem.</span>
+                Lorem ipsum dolor sit amet.
+                <span className="timestamp">
+                    {new Date().toUTCString()}
+                </span>
+            </p>
+            <p className="message receiver">
+                <span className="name">Lorem.</span>
+                Lorem ipsum dolor sit amet.
+                <span className="timestamp">
+                    {new Date().toUTCString()}
+                </span>
+            </p>
+            <p className="message ">
+                <span className="name">Lorem.</span>
+                Lorem ipsum dolor sit amet.
+                <span className="timestamp">
+                    {new Date().toUTCString()}
+                </span>
+            </p>
+            <p className="message">
+                <span className="name">Lorem.</span>
+                Lorem ipsum dolor sit amet.
+                <span className="timestamp">
+                    {new Date().toUTCString()}
+                </span>
+            </p>
+            <p className="message receiver">
+                <span className="name">Lorem.</span>
+                Lorem ipsum dolor sit amet.
+                <span className="timestamp">
+                    {new Date().toUTCString()}
+                </span>
+            </p>
+            <p className="message ">
+                <span className="name">Lorem.</span>
+                Lorem ipsum dolor sit amet.
+                <span className="timestamp">
+                    {new Date().toUTCString()}
+                </span>
+            </p>
         </div>
         <div className="footer">
-
+            <MdInsertEmoticon className="icon"/>
+            <form action="">
+                <input type="text" placeholder="Type a message" />
+                <button type="submit">send a message</button>
+            </form>
+            <BsFillMicFill className="icon"/>
         </div>
     </Wrapper>)
 }
@@ -61,7 +145,8 @@ const Chat = () => {
 const Wrapper = styled.div`
     display: grid;
     grid-template-rows: auto 1fr auto;
-
+    padding:1rem;
+    height:90vh;
     .header{
         display:grid;
         grid-template-columns: auto 1fr auto;
@@ -123,6 +208,30 @@ const Wrapper = styled.div`
         top: -1rem;
         font-weight: 800;
         font-size: small;
+    }
+
+    .footer{
+        display:grid;
+        grid-template-columns: auto 1fr auto;
+        gap:1rem;
+        align-items:center;
+    }
+
+    .footer form{
+        display:grid;
+        grid-template-columns: 1fr auto;
+
+    }
+
+    .footer form input{
+        outline-width: 0;
+        border:none;
+        padding:1rem;
+        border-radius: 2rem;
+    }
+
+    .footer form button{
+        display: none;
     }
 `
 
